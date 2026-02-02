@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR Coffee - Menu</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body class="bg-stone-100 text-stone-800" x-data="cafeApp()">
+    <nav class="bg-white shadow-md p-4 mb-8">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-orange-700">AR COFFEE</h1>
+        <a href="/admin" class="text-sm bg-stone-200 px-3 py-1 rounded"
+          >Admin Login</a
+        >
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <template x-for="item in menuList" :key="item.id">
+          <div
+            class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200"
+          >
+            <img
+              :src="item.image"
+              :alt="item.name"
+              class="w-full h-56 object-cover"
+            />
+            <div class="p-5">
+              <h3 class="text-xl font-bold mb-2" x-text="item.name"></h3>
+              <p class="text-stone-600 text-sm mb-4" x-text="item.desc"></p>
+              <div class="flex justify-between items-center">
+                <span
+                  class="text-lg font-bold text-orange-600"
+                  x-text="'Rp ' + Number(item.price).toLocaleString('id-ID')"
+                ></span>
+                <span
+                  class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold"
+                  x-text="'Stok: ' + item.stock"
+                ></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

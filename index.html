@@ -25,27 +25,13 @@
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <template x-for="item in menuList" :key="item.id">
-          <div
-            class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200"
-          >
-            <img
-              :src="item.image"
-              :alt="item.name"
-              class="w-full h-56 object-cover"
-            />
-            <div class="p-5">
-              <h3 class="text-xl font-bold mb-2" x-text="item.name"></h3>
-              <p class="text-stone-600 text-sm mb-4" x-text="item.desc"></p>
-              <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-orange-600" x-text="'Rp ' + Number(item.price).toLocaleString('id-ID')"></span>
-                <span
-                  class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold"
-                  x-text="'Stok: ' + item.stock"
-                ></span>
-              </div>
-            </div>
-          </div>
-        </template>
+    <div class="bg-white p-4 rounded-lg shadow">
+        <img :src="item.image" class="w-full h-48 object-cover rounded">
+        <h2 class="text-xl font-bold mt-2" x-text="item.name"></h2>
+        <p class="text-orange-600 font-bold" x-text="'Rp ' + Number(item.price).toLocaleString('id-ID')"></p>
+        <p class="text-sm" x-text="'Stok: ' + item.stock"></p>
+    </div>
+</template>
       </div>
     </div>
 

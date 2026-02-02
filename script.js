@@ -3,17 +3,21 @@ function cafeApp() {
         menuList: [],
         async init() {
             try {
-                // Kita akan mencoba mengambil index menu yang dibuat otomatis oleh CMS
-                const response = await fetch('/data/menu/index.json');
-                if (!response.ok) {
-                    // Jika file index belum ada, coba ambil folder data
-                    console.log("Mencoba memuat data menu...");
+                // Ambil daftar file dari GitHub agar website tahu file apa saja yang ada
+                const response = await fetch('https://api.github.com/repos/dearraph/coffe/contents/data/menu');
+                const files = await response.json();
+                
+                this.menuList = []; 
+                for (const file of files) {
+                    if (file.name.endsWith('.json')) {
+                        // Ambil isi dari masing-masing file menu
+                        const contentReq = await fetch(file.download_url);
+                        const item = await contentReq.json();
+                        this.menuList.push(item);
+                    }
                 }
-                const data = await response.json();
-                this.menuList = Array.isArray(data) ? data : [data];
             } catch (error) {
-                console.error("Menu tidak muncul karena data belum sinkron.");
-                // Jika error, kita buat tombol manual untuk refresh data
+                console.error("Gagal memuat menu, pastikan folder data/menu sudah ada di GitHub.");
             }
         }
     }
